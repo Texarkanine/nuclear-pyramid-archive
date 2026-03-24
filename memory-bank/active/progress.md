@@ -7,4 +7,5 @@ Fix charset mojibake in transformed HTML files and restructure output so archive
 ## History
 
 - **2026-03-24** — Complexity analysis complete. Level 2 determined. Entering Plan phase.
-- **2026-03-24** — Plan phase complete. 6-step implementation plan, 9 behaviors, 4 test classes. No open questions.
+- **2026-03-24** — Plan phase complete. 5-step implementation plan, 9 behaviors, 4 test classes.
+- **2026-03-24** — Preflight PASS. Fixed charset regex case-sensitivity. Removed unnecessary src/index.html step. Added charset to test fixture plan.

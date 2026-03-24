@@ -4,12 +4,14 @@
 Encoding Fix + docs/site Restructure
 
 ## Phase
-PLAN - COMPLETE
+PREFLIGHT - COMPLETE (PASS)
 
 ## What Was Done
-- 6-step implementation plan with TDD
-- 9 behaviors to verify, 4 test classes
-- Files affected: lib/transform.rb, Rakefile, test/transform_test.rb, src/index.html, README.md
+- Preflight validated plan against codebase reality
+- Fixed: charset regex needs case-insensitive flag (mixed case in archive files)
+- Fixed: removed unnecessary src/index.html step
+- Fixed: test fixture needs charset declaration for integration test
+- Advisory: src/about.php charset mismatch is benign (ASCII-only content)
 
 ## Next Step
-Preflight validation
+Build phase

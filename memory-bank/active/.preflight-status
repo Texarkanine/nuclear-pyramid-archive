@@ -1,7 +1,8 @@
 PASS
-
+Date: 2026-03-24
+Task: encoding-restructure
 Findings:
-1. [FIXED] Manifest overcounted proton.php figures (claimed 31, actually 29 — fig003 and fig005 are .gif only, no .jpg). Corrected in tasks.md.
-2. [INCORPORATED] Added binary magic-byte validation step (step 9) to catch fake images during transform copy.
-3. [ADVISORY] CNAME file not in manifest. If custom domain nuclearpyramid.com is configured, add CNAME generation to transform step.
-4. [ADVISORY] Root-relative Home link (href="/") depends on custom domain being configured. If served from github.io/repo-name/, the Home link will break.
+- FIXED: Charset regex must be case-insensitive
+- FIXED: Removed unnecessary src/index.html step
+- FIXED: Add charset to test fixture
+- ADVISORY: src/about.php charset=iso-8859-1 but ASCII-only content, no visible issue
