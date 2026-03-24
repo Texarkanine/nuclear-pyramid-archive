@@ -57,7 +57,7 @@ h3 { color: FFFFFF; font: 16pt Arial; letter-spacing: 1 pt; }
 
 <h1>About This Archive</h1>
 
-<p>This page is a live archive of the original NuclearPyramid.com site. TODO: flesh out.</p>
+<p>This page is a live archive of the original NuclearPyramid.com site. I have not been able to find a copy of the <b>From Gravitons to Galaxies.docx</b> document, but the other pages are intact.</p>
 
       </span>
      </td>
