@@ -21,18 +21,18 @@ bundle exec rake build
 ```bash
 bundle exec rake retrieve           # Bulk download from Wayback Machine
 bundle exec rake retrieve:targeted  # Fetch specific pages from known-good snapshots
-bundle exec rake transform          # Filter, rewrite links, generate about page → docs/
+bundle exec rake transform          # Filter, rewrite links, copy src/ pages → docs/
 bundle exec rake clean              # Remove docs/ output
 bundle exec rake test               # Run test suite
 ```
 
-The `transform` step reads from `archive.org/` and writes the final static site to `docs/`.
+The `transform` step reads from `archive.org/` and `src/`, and writes the final static site to `docs/`.
 
 ## How It Works
 
 1. **Retrieve**: Downloads the site from the Wayback Machine using `wayback_machine_downloader_straw`. Three core articles (`great_pyramid.php`, `other_two_pyramids.php`, `proton.php`) and one image (`greatpyramid/fig001.gif`) are fetched from specific known-good snapshots via `id_` URLs, since their latest captures were overwritten by domain-parker content.
 
-2. **Transform**: Filters files to a curated manifest (excluding junk, ad infrastructure, and the defunct phpBB forum), rewrites all `http://nuclearpyramid.com` links to `https://`, injects an "About" navigation link, generates the About page, and validates binary files by checking magic bytes.
+2. **Transform**: Filters files to a curated manifest (excluding junk, ad infrastructure, and the defunct phpBB forum), rewrites all `http://nuclearpyramid.com` links to `https://`, injects an "About" navigation link, copies custom pages from `src/`, and validates binary files by checking magic bytes.
 
 3. **Publish**: GitHub Pages serves `docs/` as a static site. A `.nojekyll` file disables Jekyll processing so `.php` files are served as-is.
 
@@ -62,4 +62,4 @@ The transform step publishes exactly these files to `docs/`:
 bundle exec rake test
 ```
 
-Tests cover manifest filtering, link rewriting, navigation injection, about page generation, binary file validation, and full build integration.
+Tests cover manifest filtering, link rewriting, navigation injection, binary file validation, and full build integration.

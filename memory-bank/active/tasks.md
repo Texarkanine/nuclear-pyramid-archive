@@ -20,7 +20,7 @@ Every file that must exist in `docs/` to serve the complete site. This is the **
 | `other_two_pyramids.php` | Wayback `20160322015445` | Targeted fetch (on-disk version is junk) |
 | `proton.php` | Wayback `20160324003324` | Targeted fetch (on-disk version is junk) |
 | `energy_solution.php` | `archive.org/energy_solution.php` | Exists on disk (commented out in nav but real content) |
-| `about.php` | Generated | New placeholder page |
+| `about.php` | `src/about.php` | Custom page, copied verbatim from `src/` |
 
 **Images — proton.php figures:**
 `fig001.jpg`, `fig002.jpg`, `fig004.jpg`, `fig006.jpg`–`fig028.jpg` (26 .jpg files), `fig003.gif`, `fig005.gif`, `nuclides.gif` (29 total — note: fig003 and fig005 are .gif only, no .jpg variants exist)
@@ -71,7 +71,7 @@ graph LR
         FILTER["filter to manifest"]
         REWRITE["rewrite http→https"]
         NAV["inject About nav item"]
-        ABOUT["generate about.php"]
+        ABOUT["copy src/ files"]
         NOJEKYLL["generate .nojekyll"]
     end
 ```
@@ -203,4 +203,4 @@ No new external technology — validation not required.
 - [x] Technology validation complete
 - [x] Preflight (PASS)
 - [x] Build (PASS — 15/15 steps, 39 tests, 0 failures)
-- [ ] QA
+- [x] QA (PASS — 4 trivial doc fixes applied)

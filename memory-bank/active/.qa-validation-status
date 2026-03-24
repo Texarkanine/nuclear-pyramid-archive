@@ -1,0 +1,13 @@
+QA: PASS
+Date: 2026-03-24
+Task: nuclear-pyramid-pipeline
+
+Findings (all trivial, fixed in-place):
+1. tasks.md: about.php listed as "Generated" — updated to "src/about.php"
+2. tasks.md: pipeline diagram said "generate about.php" — updated to "copy src/ files"
+3. README.md: said "generates the About page" — updated to "copies custom pages from src/"
+4. README.md: transform task description updated to mention src/
+
+Additional operator-reported issues (not QA scope, recorded for tracking):
+- Git LFS not configured for binary files — fixed during QA (added .gitattributes)
+- From Gravitons to Galaxies.docx is truncated at 1MB (Wayback Machine limit) — user will source a working copy
