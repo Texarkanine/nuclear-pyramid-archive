@@ -32,48 +32,6 @@ class CharsetRewriteTest < Minitest::Test
   end
 end
 
-class ManifestFilterTest < Minitest::Test
-  def test_genuine_page_in_manifest
-    assert Transform.in_manifest?("index.php")
-  end
-
-  def test_junk_page_not_in_manifest
-    refute Transform.in_manifest?("toolbar.php")
-  end
-
-  def test_image_in_manifest
-    assert Transform.in_manifest?("fig001.jpg")
-  end
-
-  def test_forum_not_in_manifest
-    refute Transform.in_manifest?("proton_forum/login.php")
-  end
-
-  def test_energy_image_in_manifest
-    assert Transform.in_manifest?("energy/1.png")
-  end
-
-  def test_greatpyramid_image_in_manifest
-    assert Transform.in_manifest?("greatpyramid/fig002.gif")
-  end
-
-  def test_docx_in_manifest
-    assert Transform.in_manifest?("From Gravitons to Galaxies.docx")
-  end
-
-  def test_book_htm_not_in_manifest
-    refute Transform.in_manifest?("book.htm")
-  end
-
-  def test_js_not_in_manifest
-    refute Transform.in_manifest?("js/general.js")
-  end
-
-  def test_index_html_not_in_manifest
-    refute Transform.in_manifest?("index.html")
-  end
-end
-
 class LinkRewriteTest < Minitest::Test
   def test_rewrites_http_to_https
     input = '<a href="http://nuclearpyramid.com/great_pyramid.php">link</a>'
@@ -138,38 +96,6 @@ class NavInjectionTest < Minitest::Test
   end
 end
 
-class BinaryValidationTest < Minitest::Test
-  def test_valid_gif_passes
-    path = File.join(FIXTURE_SOURCE, "np_logo.gif")
-    assert Transform.valid_binary?(path)
-  end
-
-  def test_valid_jpeg_passes
-    path = File.join(FIXTURE_SOURCE, "fig001.jpg")
-    assert Transform.valid_binary?(path)
-  end
-
-  def test_valid_png_passes
-    path = File.join(FIXTURE_SOURCE, "energy", "1.png")
-    assert Transform.valid_binary?(path)
-  end
-
-  def test_valid_docx_passes
-    path = File.join(FIXTURE_SOURCE, "From Gravitons to Galaxies.docx")
-    assert Transform.valid_binary?(path)
-  end
-
-  def test_fake_gif_fails
-    path = File.join(FIXTURE_SOURCE, "greatpyramid", "fig001.gif")
-    refute Transform.valid_binary?(path)
-  end
-
-  def test_php_file_skipped
-    path = File.join(FIXTURE_SOURCE, "index.php")
-    assert Transform.valid_binary?(path)
-  end
-end
-
 class BuildIntegrationTest < Minitest::Test
   def setup
     FileUtils.rm_rf(FIXTURE_DEST)
@@ -179,33 +105,23 @@ class BuildIntegrationTest < Minitest::Test
     FileUtils.rm_rf(FIXTURE_DEST)
   end
 
-  def test_build_creates_docs_directory
+  def test_build_creates_output_directory
     Transform.build(FIXTURE_SOURCE, FIXTURE_SRC, FIXTURE_DEST)
     assert Dir.exist?(FIXTURE_DEST)
   end
 
-  def test_build_does_not_create_nojekyll
-    Transform.build(FIXTURE_SOURCE, FIXTURE_SRC, FIXTURE_DEST)
-    refute File.exist?(File.join(FIXTURE_DEST, ".nojekyll"))
-  end
-
-  def test_build_creates_about_page
-    Transform.build(FIXTURE_SOURCE, FIXTURE_SRC, FIXTURE_DEST)
-    assert File.exist?(File.join(FIXTURE_DEST, "about.php"))
-  end
-
-  def test_build_copies_manifest_files
+  def test_build_copies_all_source_files
     Transform.build(FIXTURE_SOURCE, FIXTURE_SRC, FIXTURE_DEST)
     assert File.exist?(File.join(FIXTURE_DEST, "index.php"))
     assert File.exist?(File.join(FIXTURE_DEST, "np_logo.gif"))
   end
 
-  def test_build_excludes_junk_files
+  def test_build_copies_src_overlay_files
     Transform.build(FIXTURE_SOURCE, FIXTURE_SRC, FIXTURE_DEST)
-    refute File.exist?(File.join(FIXTURE_DEST, "toolbar.php"))
+    assert File.exist?(File.join(FIXTURE_DEST, "about.php"))
   end
 
-  def test_build_rewrites_links_in_html
+  def test_build_rewrites_links_in_php
     Transform.build(FIXTURE_SOURCE, FIXTURE_SRC, FIXTURE_DEST)
     content = File.read(File.join(FIXTURE_DEST, "index.php"))
     assert_includes content, "https://nuclearpyramid.com/"
@@ -218,22 +134,18 @@ class BuildIntegrationTest < Minitest::Test
     assert_includes content, "about.php"
   end
 
-  def test_build_rewrites_charset_in_html
+  def test_build_rewrites_charset_in_php
     Transform.build(FIXTURE_SOURCE, FIXTURE_SRC, FIXTURE_DEST)
     content = File.read(File.join(FIXTURE_DEST, "index.php"))
     assert_includes content, "charset=utf-8"
     refute_includes content, "charset=iso-8859-1"
   end
 
-  def test_build_skips_invalid_binaries
+  def test_build_does_not_mangle_binaries
     Transform.build(FIXTURE_SOURCE, FIXTURE_SRC, FIXTURE_DEST)
-    refute File.exist?(File.join(FIXTURE_DEST, "greatpyramid", "fig001.gif")),
-      "fake image should not be copied"
-  end
-
-  def test_build_copies_valid_binaries
-    Transform.build(FIXTURE_SOURCE, FIXTURE_SRC, FIXTURE_DEST)
-    assert File.exist?(File.join(FIXTURE_DEST, "greatpyramid", "fig002.gif"))
+    src_bytes = File.binread(File.join(FIXTURE_SOURCE, "np_logo.gif"))
+    dest_bytes = File.binread(File.join(FIXTURE_DEST, "np_logo.gif"))
+    assert_equal src_bytes, dest_bytes
   end
 end
 

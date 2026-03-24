@@ -8,16 +8,9 @@ SRC_DIR    = File.expand_path("src", __dir__)
 DOCS_DIR   = File.expand_path("docs", __dir__)
 SITE_DIR   = File.join(DOCS_DIR, "site")
 
-desc "Bulk-download site from Wayback Machine into archive.org/"
+desc "Download pages + images from Wayback Machine into archive.org/"
 task :retrieve do
-  Retrieve.bulk_download(SOURCE_DIR)
-end
-
-namespace :retrieve do
-  desc "Fetch specific pages from known-good Wayback snapshots"
-  task :targeted do
-    Retrieve.fetch_targeted(SOURCE_DIR)
-  end
+  Retrieve.download_all(SOURCE_DIR)
 end
 
 desc "Transform archive.org/ into docs/site/ for publishing"
@@ -28,7 +21,7 @@ task :transform do
 end
 
 desc "Full pipeline: retrieve + transform"
-task build: [:retrieve, "retrieve:targeted", :transform]
+task build: %i[retrieve transform]
 
 desc "Remove docs/ output directory"
 task :clean do

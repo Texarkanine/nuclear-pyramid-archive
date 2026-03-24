@@ -19,22 +19,28 @@ bundle exec rake build
 **Individual steps:**
 
 ```bash
-bundle exec rake retrieve           # Bulk download from Wayback Machine
-bundle exec rake retrieve:targeted  # Fetch specific pages from known-good snapshots
-bundle exec rake transform          # Filter, rewrite links, copy src/ pages → docs/site/
-bundle exec rake clean              # Remove docs/ output
-bundle exec rake test               # Run test suite
+bundle exec rake retrieve   # Download 4 pages + images from Wayback Machine
+bundle exec rake transform  # Rewrite links, inject nav, copy src/ → docs/site/
+bundle exec rake clean      # Remove docs/ output
+bundle exec rake test        # Run test suite
 ```
-
-The `transform` step reads from `archive.org/` and `src/`, writes the archive site to `docs/site/`, and generates `docs/index.html` (redirect) and `docs/.nojekyll`.
 
 ## How It Works
 
-1. **Retrieve**: Downloads the site from the Wayback Machine using `wayback_machine_downloader_straw`. Three core articles (`great_pyramid.php`, `other_two_pyramids.php`, `proton.php`) and one image (`greatpyramid/fig001.gif`) are fetched from specific known-good snapshots via `id_` URLs, since their latest captures were overwritten by domain-parker content.
+1. **Retrieve**: Downloads four specific pages from the Wayback Machine using `wayback_machine_downloader` with `--exact-url --page-requisites`. Each page is pinned to a known-good 2017-era snapshot timestamp. Page requisites (images) are automatically downloaded alongside each page. Post-download cleanup renames `index.html` → `index.php` and removes URL-encoded duplicate directories.
 
-2. **Transform**: Filters files to a curated manifest (excluding junk, ad infrastructure, and the defunct phpBB forum), rewrites all `http://nuclearpyramid.com` links to `https://`, rewrites `charset=iso-8859-1` to `charset=utf-8` to match the transcoded encoding, injects an "About" navigation link, copies custom pages from `src/`, and validates binary files by checking magic bytes. Output goes to `docs/site/`.
+2. **Transform**: Copies all downloaded files from `archive.org/` to `docs/site/`, applying HTML transforms to `.php`/`.html` files: rewrites `http://nuclearpyramid.com` links to `https://`, rewrites `charset=iso-8859-1` to `charset=utf-8`, and injects an "About" navigation link. Custom pages from `src/` are copied on top.
 
 3. **Publish**: GitHub Pages serves `docs/` as a static site. `docs/index.html` redirects to `site/index.php`. A `.nojekyll` file disables Jekyll processing so `.php` files are served as-is.
+
+## Pages Manifest
+
+| Page | Wayback Timestamp | URL |
+|---|---|---|
+| Home | 20170509195054 | `http://nuclearpyramid.com/` |
+| Great Pyramid | 20170513025806 | `http://nuclearpyramid.com/great_pyramid.php` |
+| Other Two Pyramids | 20170420190729 | `http://www.nuclearpyramid.com/other_two_pyramids.php` |
+| Proton | 20171010225935 | `http://nuclearpyramid.com/proton.php` |
 
 ## GitHub Pages Configuration
 
@@ -43,23 +49,10 @@ The `transform` step reads from `archive.org/` and `src/`, writes the archive si
 3. Set **Branch** to `main`, folder to `/docs`
 4. Optionally configure the custom domain `nuclearpyramid.com`
 
-## File Manifest
-
-The transform step publishes these files:
-
-| Location | Category | Files |
-|---|---|---|
-| `docs/` | Scaffolding | `index.html` (redirect), `.nojekyll` |
-| `docs/site/` | Pages | `index.php`, `great_pyramid.php`, `other_two_pyramids.php`, `proton.php`, `energy_solution.php`, `about.php` |
-| `docs/site/` | Proton figures | 26 JPGs (`fig001`–`fig028`, excluding `fig003`/`fig005`) + `fig003.gif`, `fig005.gif`, `nuclides.gif` |
-| `docs/site/` | Pyramid figures | `greatpyramid/fig001.gif`–`fig003.gif` |
-| `docs/site/` | Energy figures | `energy/1.png`, `energy/2.gif`–`energy/7.gif` |
-| `docs/site/` | Other assets | `np_logo.gif`, `From Gravitons to Galaxies.docx` |
-
 ## Testing
 
 ```bash
 bundle exec rake test
 ```
 
-Tests cover manifest filtering, link rewriting, charset rewriting, navigation injection, binary file validation, scaffolding generation, and full build integration.
+Tests cover the page manifest, download command generation, post-download cleanup, charset rewriting, link rewriting, navigation injection, scaffolding generation, and full build integration.

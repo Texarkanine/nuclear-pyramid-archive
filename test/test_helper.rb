@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "minitest/autorun"
+require_relative "../lib/retrieve"
 require_relative "../lib/transform"
 
 FIXTURES_DIR = File.expand_path("fixtures", __dir__)
