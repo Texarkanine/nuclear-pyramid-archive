@@ -165,7 +165,9 @@ module Transform
           warn "SKIPPED invalid binary: #{relative_path}"
         end
       else
-        content = File.read(src)
+        content = File.read(src, encoding: "binary")
+        content.force_encoding("UTF-8")
+        content.encode!("UTF-8", "Windows-1252", invalid: :replace, undef: :replace) unless content.valid_encoding?
         content = rewrite_links(content)
         content = inject_about_nav(content)
         File.write(dest, content)
