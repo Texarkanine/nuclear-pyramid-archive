@@ -8,7 +8,7 @@ The original site was PHP-based, but never used server-side logic in its content
 
 ## Source vs. Publishable Content
 
-`archive.org/` is the raw download directory from the Wayback Machine. Not all files are genuine content — several are domain-parker pages (e.g., `great_pyramid.php`, `other_two_pyramids.php` contain redirect/ad scripts instead of real articles). Only `index.php` contains authentic site content in the current download set.
+`archive.org/` is the raw download directory from the Wayback Machine. Not all files in the latest Wayback snapshots are genuine content — the domain was squatted after the site went offline, so recent captures contain redirect/ad scripts. The retrieval pipeline uses `--to 20170513` to cap bulk downloads at a known-good era, and `TARGETED_SNAPSHOTS` in `lib/retrieve.rb` pin specific pages to the `20170513025806` snapshot.
 
 ## Junk File Identification
 

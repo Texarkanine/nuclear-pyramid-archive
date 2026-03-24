@@ -4,12 +4,11 @@
 Fix Wayback Machine Download Timestamps
 
 ## Phase
-BUILD - IN-PROGRESS
+QA - COMPLETE (PASS)
 
 ## What Was Done
-- Complexity analysis: Level 1 (single-component bug fix in lib/retrieve.rb)
-- Root cause: TARGETED_SNAPSHOTS use 2016 timestamps that return error/squatter pages
-- Confirmed fix: use 20170513025806 timestamp; add --to flag to bulk download
+- 1 trivial doc fix: updated systemPatterns.md to reflect fixed timestamps
+- Full suite: 38 runs, 57 assertions, 0 failures
 
 ## Next Step
-- Write failing test, apply fix, verify
+Wrap-up: commit and done (Level 1 — no reflect/archive)

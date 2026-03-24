@@ -8,13 +8,13 @@ module Retrieve
   WAYBACK_ID_BASE = "https://web.archive.org/web/%sid_/%s"
 
   TARGETED_SNAPSHOTS = {
-    "great_pyramid.php"      => { timestamp: "20160305172515", url: "http://nuclearpyramid.com/great_pyramid.php" },
-    "other_two_pyramids.php" => { timestamp: "20160322015445", url: "http://nuclearpyramid.com/other_two_pyramids.php" },
-    "proton.php"             => { timestamp: "20160324003324", url: "http://nuclearpyramid.com/proton.php" },
-    "greatpyramid/fig001.gif" => { timestamp: "20160305172515", url: "http://nuclearpyramid.com/greatpyramid/fig001.gif" },
+    "great_pyramid.php"      => { timestamp: "20170513025806", url: "http://nuclearpyramid.com/great_pyramid.php" },
+    "other_two_pyramids.php" => { timestamp: "20170513025806", url: "http://nuclearpyramid.com/other_two_pyramids.php" },
+    "proton.php"             => { timestamp: "20170513025806", url: "http://nuclearpyramid.com/proton.php" },
+    "greatpyramid/fig001.gif" => { timestamp: "20170513025806", url: "http://nuclearpyramid.com/greatpyramid/fig001.gif" },
   }.freeze
 
-  BULK_DOWNLOAD_CMD = "wayback_machine_downloader http://nuclearpyramid.com -d %s -c 8"
+  BULK_DOWNLOAD_CMD = "wayback_machine_downloader http://nuclearpyramid.com -d %s -c 8 --to 20170513"
 
   def self.wayback_id_url(timestamp, original_url)
     format(WAYBACK_ID_BASE, timestamp, original_url)
