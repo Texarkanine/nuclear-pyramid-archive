@@ -1,14 +1,15 @@
 # Active Context
 
 ## Current Task
-Fix Wayback Machine Download Timestamps
+Encoding Fix + docs/site Restructure
 
 ## Phase
-QA - COMPLETE (PASS)
+PLAN - COMPLETE
 
 ## What Was Done
-- 1 trivial doc fix: updated systemPatterns.md to reflect fixed timestamps
-- Full suite: 38 runs, 57 assertions, 0 failures
+- 6-step implementation plan with TDD
+- 9 behaviors to verify, 4 test classes
+- Files affected: lib/transform.rb, Rakefile, test/transform_test.rb, src/index.html, README.md
 
 ## Next Step
-Wrap-up: commit and done (Level 1 — no reflect/archive)
+Preflight validation

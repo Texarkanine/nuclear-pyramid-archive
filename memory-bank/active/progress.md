@@ -1,11 +1,10 @@
-# Progress: Fix Wayback Machine Download Timestamps
+# Progress: Encoding Fix + docs/site Restructure
 
-Fix retrieval timestamps so archived pages download from known-good Wayback Machine snapshots instead of error/squatter pages.
+Fix charset mojibake in transformed HTML files and restructure output so archive content goes to `docs/site/` with a redirect `docs/index.html`.
 
-**Complexity:** Level 1
+**Complexity:** Level 2
 
 ## History
 
-- **2026-03-24** — Complexity analysis complete. Level 1 determined. Entering Build phase.
-- **2026-03-24** — Build PASS. Updated TARGETED_SNAPSHOTS (2016→2017), added --to flag to BULK_DOWNLOAD_CMD. 3 new tests in test/retrieve_test.rb. Full suite: 38/57/0.
-- **2026-03-24** — QA PASS. 1 trivial doc fix (systemPatterns.md stale description).
+- **2026-03-24** — Complexity analysis complete. Level 2 determined. Entering Plan phase.
+- **2026-03-24** — Plan phase complete. 6-step implementation plan, 9 behaviors, 4 test classes. No open questions.
