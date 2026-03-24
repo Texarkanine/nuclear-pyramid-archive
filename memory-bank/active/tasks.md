@@ -14,4 +14,4 @@ Fix charset mojibake (UTF-8 content declared as iso-8859-1) and restructure outp
 - [x] Technology validation complete
 - [x] Preflight
 - [x] Build (5/5 steps)
-- [ ] QA
+- [x] QA (PASS)
