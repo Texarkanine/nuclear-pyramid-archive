@@ -4,14 +4,16 @@
 Static Archive Pipeline for NuclearPyramid.com
 
 ## Phase
-COMPLEXITY-ANALYSIS - COMPLETE
+PLAN - COMPLETE
 
 ## What Was Done
-- Oriented on the project: scanned all 92 files in `archive.org/`, classified each as genuine content, genuine image, or junk
-- Identified 3 core article pages that need targeted Wayback Machine retrieval (great_pyramid.php, other_two_pyramids.php, proton.php)
-- Confirmed all image/asset files are genuine except `greatpyramid/fig001.gif` (HTML disguised as GIF)
-- Gathered all requirements from the user: docs/ publish dir, Ruby/Rake pipeline, nuclearpyramid.com domain with https rewrite, placeholder About page
-- Determined complexity: Level 3 (Intermediate Feature) — multiple components (Gemfile, Rakefile, retrieval tasks, transformation logic, About page, GH Pages config) but no deep architectural decisions
+- Traced every file referenced by the site's pages to build a definitive serve manifest
+- Confirmed 3 article pages + 1 image need targeted Wayback Machine fetches (via `id_` URLs)
+- Confirmed all other assets exist on disk as real files
+- Designed pipeline: Gemfile + Rakefile + lib/transform.rb + lib/retrieve.rb
+- Planned TDD test suite with minitest for transform logic
+- Created 14-step implementation plan across 6 phases
+- No open questions identified — approach is clear
 
 ## Next Step
-Load Level 3 workflow and begin planning phase
+Proceed to Preflight phase to validate the plan before build.
