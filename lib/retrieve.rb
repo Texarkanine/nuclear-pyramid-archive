@@ -32,6 +32,14 @@ module Retrieve
       )
       downloader.download_files
     end
+    cleanup(dest_dir)
+  end
+
+  def self.cleanup(dest_dir)
+    html = File.join(dest_dir, "index.html")
+    php = File.join(dest_dir, "index.php")
+    File.rename(html, php) if File.exist?(html) && !File.exist?(php)
+
     relocate_encoded_dirs(dest_dir)
   end
 

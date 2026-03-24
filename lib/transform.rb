@@ -13,11 +13,11 @@ module Transform
     <!DOCTYPE html>
     <html>
       <head>
-        <meta http-equiv="refresh" content="0; url=site/">
+        <meta http-equiv="refresh" content="0; url=site/index.php">
         <title>Redirecting...</title>
       </head>
       <body>
-        <p>If you are not redirected automatically, <a href="site/">click here</a>.</p>
+        <p>If you are not redirected automatically, <a href="site/index.php">click here</a>.</p>
       </body>
     </html>
   HTML
