@@ -55,9 +55,18 @@ h3 { color: FFFFFF; font: 16pt Arial; letter-spacing: 1 pt; }
      <td>
       <span style="color: 000000; font: 12pt Times New Roman;">
 
-<h1>About This Archive</h1>
+      <h1>About This Archive</h1>
 
-<p>This page is a live archive of the original NuclearPyramid.com site. I have not been able to find a copy of the <b>From Gravitons to Galaxies.docx</b> document, but the other pages are intact.</p>
+      <p>
+            This page is a live archive of the original NuclearPyramid.com site, restored by someone with no affiliation with, nor contact with, the original author.
+            Some links may still be broken if their contents were not captured by the Internet Archive, and I have not been able to find copies of their contents yet.
+      </p>
+      <p>
+            You can browse the Internet Archive's copy of this site at <a href="https://web.archive.org/web/20170509195054/http://nuclearpyramid.com/" target="_blank">https://web.archive.org/web/20170509195054/http://nuclearpyramid.com/</a>.
+      </p>
+      <p>
+            To the original author: Should you wish to recover ownership of this domain, please reach out to me at <code>npa@cani.ne.jp</code>.
+      </p>
 
       </span>
      </td>
