@@ -4,11 +4,12 @@
 Encoding Fix + docs/site Restructure
 
 ## Phase
-QA - COMPLETE (PASS)
+REFLECT - COMPLETE
 
 ## What Was Done
-- QA reviewed all 5 requirements against implementation
-- No issues found — all requirements met, no regressions, no integrity issues, documentation updated
+- Reflected on task execution: plan was accurate, build clean, QA clean
+- Key insight: transcoding pipelines must update in-band encoding declarations, not just byte-level encoding
+- No process improvements needed — scope was well-bounded
 
 ## Next Step
-Reflect phase
+Archive phase (`/niko-archive`)

@@ -11,3 +11,4 @@ Fix charset mojibake in transformed HTML files and restructure output so archive
 - **2026-03-24** — Preflight PASS. Fixed charset regex case-sensitivity. Removed unnecessary src/index.html step.
 - **2026-03-24** — Build PASS. 5/5 steps completed. 46 tests (69 assertions), 0 failures.
 - **2026-03-24** — QA PASS. No issues found. All 5 requirements verified.
+- **2026-03-24** — Reflect COMPLETE. Key insight: transcoding pipelines must update in-band encoding declarations alongside byte-level encoding.
