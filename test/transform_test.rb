@@ -2,6 +2,36 @@
 
 require_relative "test_helper"
 
+class CharsetRewriteTest < Minitest::Test
+  def test_rewrites_iso_8859_1_to_utf8
+    input = '<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">'
+    expected = '<meta http-equiv="Content-Type" content="text/html; charset=utf-8">'
+    assert_equal expected, Transform.rewrite_charset(input)
+  end
+
+  def test_rewrites_windows_1252_to_utf8
+    input = '<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">'
+    expected = '<meta http-equiv="Content-Type" content="text/html; charset=utf-8">'
+    assert_equal expected, Transform.rewrite_charset(input)
+  end
+
+  def test_case_insensitive_rewrite
+    input = '<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=ISO-8859-1">'
+    expected = '<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">'
+    assert_equal expected, Transform.rewrite_charset(input)
+  end
+
+  def test_leaves_utf8_charset_alone
+    input = '<meta http-equiv="Content-Type" content="text/html; charset=utf-8">'
+    assert_equal input, Transform.rewrite_charset(input)
+  end
+
+  def test_leaves_html_without_charset_alone
+    input = "<html><body>No charset</body></html>"
+    assert_equal input, Transform.rewrite_charset(input)
+  end
+end
+
 class ManifestFilterTest < Minitest::Test
   def test_genuine_page_in_manifest
     assert Transform.in_manifest?("index.php")
@@ -154,9 +184,9 @@ class BuildIntegrationTest < Minitest::Test
     assert Dir.exist?(FIXTURE_DEST)
   end
 
-  def test_build_creates_nojekyll
+  def test_build_does_not_create_nojekyll
     Transform.build(FIXTURE_SOURCE, FIXTURE_SRC, FIXTURE_DEST)
-    assert File.exist?(File.join(FIXTURE_DEST, ".nojekyll"))
+    refute File.exist?(File.join(FIXTURE_DEST, ".nojekyll"))
   end
 
   def test_build_creates_about_page
@@ -188,6 +218,13 @@ class BuildIntegrationTest < Minitest::Test
     assert_includes content, "about.php"
   end
 
+  def test_build_rewrites_charset_in_html
+    Transform.build(FIXTURE_SOURCE, FIXTURE_SRC, FIXTURE_DEST)
+    content = File.read(File.join(FIXTURE_DEST, "index.php"))
+    assert_includes content, "charset=utf-8"
+    refute_includes content, "charset=iso-8859-1"
+  end
+
   def test_build_skips_invalid_binaries
     Transform.build(FIXTURE_SOURCE, FIXTURE_SRC, FIXTURE_DEST)
     refute File.exist?(File.join(FIXTURE_DEST, "greatpyramid", "fig001.gif")),
@@ -197,5 +234,28 @@ class BuildIntegrationTest < Minitest::Test
   def test_build_copies_valid_binaries
     Transform.build(FIXTURE_SOURCE, FIXTURE_SRC, FIXTURE_DEST)
     assert File.exist?(File.join(FIXTURE_DEST, "greatpyramid", "fig002.gif"))
+  end
+end
+
+class ScaffoldingTest < Minitest::Test
+  def setup
+    @scaffolding_dir = File.join(FIXTURES_DIR, "scaffolding_test")
+    FileUtils.rm_rf(@scaffolding_dir)
+    FileUtils.mkdir_p(@scaffolding_dir)
+  end
+
+  def teardown
+    FileUtils.rm_rf(@scaffolding_dir)
+  end
+
+  def test_creates_nojekyll
+    Transform.write_scaffolding(@scaffolding_dir)
+    assert File.exist?(File.join(@scaffolding_dir, ".nojekyll"))
+  end
+
+  def test_creates_redirect_to_site
+    Transform.write_scaffolding(@scaffolding_dir)
+    content = File.read(File.join(@scaffolding_dir, "index.html"))
+    assert_includes content, "site/index.php"
   end
 end

@@ -38,6 +38,10 @@ module Transform
     MANIFEST.include?(path)
   end
 
+  def self.rewrite_charset(html)
+    html.gsub(/charset=(iso-8859-1|windows-1252)/i, "charset=utf-8")
+  end
+
   def self.rewrite_links(html)
     html
       .gsub("http://www.nuclearpyramid.com", "https://nuclearpyramid.com")
@@ -91,12 +95,31 @@ module Transform
         content.encode!("UTF-8", "Windows-1252", invalid: :replace, undef: :replace) unless content.valid_encoding?
         content = rewrite_links(content)
         content = inject_about_nav(content)
+        content = rewrite_charset(content)
         File.write(dest, content)
       end
     end
 
     copy_src_files(src_dir, dest_dir) if Dir.exist?(src_dir)
-    FileUtils.touch(File.join(dest_dir, ".nojekyll"))
+  end
+
+  REDIRECT_HTML = <<~HTML
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <meta http-equiv="refresh" content="0; url=site/index.php">
+        <title>Redirecting...</title>
+      </head>
+      <body>
+        <p>If you are not redirected automatically, <a href="site/index.php">click here</a>.</p>
+      </body>
+    </html>
+  HTML
+
+  def self.write_scaffolding(docs_dir)
+    FileUtils.mkdir_p(docs_dir)
+    File.write(File.join(docs_dir, "index.html"), REDIRECT_HTML)
+    FileUtils.touch(File.join(docs_dir, ".nojekyll"))
   end
 
   def self.copy_src_files(src_dir, dest_dir)

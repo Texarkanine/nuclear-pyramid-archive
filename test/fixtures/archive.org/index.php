@@ -1,5 +1,8 @@
 <html>
-<head><title>Nuclear Pyramid . com</title></head>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Nuclear Pyramid . com</title>
+</head>
 <body topmargin=0 bgcolor=#AAAAAA>
 <table align=center width=720>
  <tr>

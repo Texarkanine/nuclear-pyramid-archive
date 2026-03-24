@@ -5,7 +5,8 @@ require_relative "lib/retrieve"
 
 SOURCE_DIR = File.expand_path("archive.org", __dir__)
 SRC_DIR    = File.expand_path("src", __dir__)
-DEST_DIR   = File.expand_path("docs", __dir__)
+DOCS_DIR   = File.expand_path("docs", __dir__)
+SITE_DIR   = File.join(DOCS_DIR, "site")
 
 desc "Bulk-download site from Wayback Machine into archive.org/"
 task :retrieve do
@@ -19,10 +20,11 @@ namespace :retrieve do
   end
 end
 
-desc "Transform archive.org/ into docs/ for publishing"
+desc "Transform archive.org/ into docs/site/ for publishing"
 task :transform do
-  Transform.build(SOURCE_DIR, SRC_DIR, DEST_DIR)
-  puts "Transform complete. Output in #{DEST_DIR}"
+  Transform.build(SOURCE_DIR, SRC_DIR, SITE_DIR)
+  Transform.write_scaffolding(DOCS_DIR)
+  puts "Transform complete. Output in #{DOCS_DIR}"
 end
 
 desc "Full pipeline: retrieve + transform"
@@ -30,8 +32,8 @@ task build: [:retrieve, "retrieve:targeted", :transform]
 
 desc "Remove docs/ output directory"
 task :clean do
-  FileUtils.rm_rf(DEST_DIR)
-  puts "Cleaned #{DEST_DIR}"
+  FileUtils.rm_rf(DOCS_DIR)
+  puts "Cleaned #{DOCS_DIR}"
 end
 
 desc "Run tests"
