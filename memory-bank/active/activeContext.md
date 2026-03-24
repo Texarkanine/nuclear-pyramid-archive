@@ -4,12 +4,13 @@
 Manifest-Based Targeted Crawl
 
 ## Phase
-COMPLEXITY-ANALYSIS - COMPLETE
+PLAN - COMPLETE
 
 ## What Was Done
-- Classified as Level 2 (simple enhancement): self-contained change to retrieve.rb and its tests
-- Four known-good Wayback URLs identified with correct per-page timestamps
-- Decided to skip image fetching in targeted path (images covered by bulk download)
+- Identified 8 behaviors to verify across 5 new/modified test methods
+- Mapped all tests to existing `test/retrieve_test.rb` (no new files)
+- Created 6-step implementation plan: stub tests → implement tests → run (fail) → update TARGETED_SNAPSHOTS → run (pass) → update docs
+- Key insight: homepage URL maps to root path, not `index.php` — works with existing `fetch_one` logic
 
 ## Next Step
-Load Level 2 workflow → Plan phase
+Preflight validation → Build phase

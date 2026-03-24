@@ -2,7 +2,7 @@
 <head>
 <meta name="description" content="NuclearPyramid.com is the home of Gregg Wilson's article on the Pyramidal Proton Model. Learn how a pyramid shape for protons helps explain mysterious of science and the universe.">
 <meta name="keywords" lang="en" content="proton, pyramid, atom, shape, atomic, nuclear, nucleus, electron, neutron, pyramidal, structure, energy, deuterium">
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Nuclear Pyramid . com</title>
 <script language="JavaScript">
   if (top.frames.length != 0)
