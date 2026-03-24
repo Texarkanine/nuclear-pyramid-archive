@@ -1,16 +1,15 @@
 # Active Context
 
 ## Current Task
-Static Archive Pipeline for NuclearPyramid.com
+Fix Wayback Machine Download Timestamps
 
 ## Phase
-QA - COMPLETE (PASS)
+BUILD - IN-PROGRESS
 
 ## What Was Done
-- Fixed 4 stale documentation references (about.php source, README descriptions)
-- Configured git LFS for *.jpg, *.gif, *.png, *.docx
-- Identified DOCX file as truncated at 1MB by Wayback Machine (user will source replacement)
-- Hosting confirmed as GitHub Pages from docs/ (DigitalOcean/nginx is a separate layer the user manages)
+- Complexity analysis: Level 1 (single-component bug fix in lib/retrieve.rb)
+- Root cause: TARGETED_SNAPSHOTS use 2016 timestamps that return error/squatter pages
+- Confirmed fix: use 20170513025806 timestamp; add --to flag to bulk download
 
 ## Next Step
-Reflect phase (`/niko-reflect`)
+- Write failing test, apply fix, verify
