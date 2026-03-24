@@ -4,16 +4,14 @@
 Static Archive Pipeline for NuclearPyramid.com
 
 ## Phase
-PLAN - COMPLETE
+PREFLIGHT - COMPLETE (PASS)
 
 ## What Was Done
-- Traced every file referenced by the site's pages to build a definitive serve manifest
-- Confirmed 3 article pages + 1 image need targeted Wayback Machine fetches (via `id_` URLs)
-- Confirmed all other assets exist on disk as real files
-- Designed pipeline: Gemfile + Rakefile + lib/transform.rb + lib/retrieve.rb
-- Planned TDD test suite with minitest for transform logic
-- Created 14-step implementation plan across 6 phases
-- No open questions identified — approach is clear
+- Verified all 29 proton.php figures exist on disk (corrected manifest from 31 to 29)
+- Verified all energy, pyramid, and homepage assets exist
+- Confirmed no convention conflicts (greenfield project)
+- Added binary magic-byte validation step to the plan (catches fake images)
+- Flagged CNAME and root-relative link as advisory items
 
 ## Next Step
-Proceed to Preflight phase to validate the plan before build.
+Operator go-ahead to proceed to Build phase (`/niko-build`).

@@ -23,7 +23,7 @@ Every file that must exist in `docs/` to serve the complete site. This is the **
 | `about.php` | Generated | New placeholder page |
 
 **Images — proton.php figures:**
-`fig001.jpg` through `fig028.jpg`, `fig003.gif`, `fig005.gif`, `nuclides.gif` (31 files, all exist on disk as real images)
+`fig001.jpg`, `fig002.jpg`, `fig004.jpg`, `fig006.jpg`–`fig028.jpg` (26 .jpg files), `fig003.gif`, `fig005.gif`, `nuclides.gif` (29 total — note: fig003 and fig005 are .gif only, no .jpg variants exist)
 
 **Images — great_pyramid.php / other_two_pyramids.php figures:**
 | File | Source |
@@ -107,6 +107,7 @@ None — implementation approach is clear. The file manifest is fully defined, t
 - **Link rewriting**: `http://nuclearpyramid.com/foo` → `https://nuclearpyramid.com/foo`; `http://www.nuclearpyramid.com/foo` → `https://nuclearpyramid.com/foo`; `http://nuclearpyramid.com:80/foo` → `https://nuclearpyramid.com/foo`; non-nuclearpyramid URLs unchanged
 - **Nav injection**: HTML with existing nav bar → About link added before `</tr></table>`; HTML without nav bar → unchanged
 - **About page generation**: Returns valid HTML matching site visual style with placeholder content
+- **Binary validation**: Real JPEG → passes; real GIF → passes; HTML disguised as .gif → raises error
 - **Full transform**: Given fixture source dir → docs/ contains exactly the manifest files, all HTML files have https links, all HTML files with nav bar have About link
 
 ### Test Infrastructure
@@ -151,26 +152,29 @@ None — implementation approach is clear. The file manifest is fully defined, t
 8. **lib/transform.rb — about page**
     - Files: `lib/transform.rb`
     - Changes: `generate_about_page` method — returns HTML matching site style with placeholder content
-9. **lib/transform.rb — build orchestration**
+9. **lib/transform.rb — binary file validation**
     - Files: `lib/transform.rb`
-    - Changes: `build(source_dir, dest_dir)` method — copy manifest files, transform HTML, generate about.php, generate .nojekyll
-10. **Run tests — all should pass**
+    - Changes: `valid_binary?(path)` method — check magic bytes of image/docx files before copying (JPEG: `\xFF\xD8\xFF`, GIF: `GIF8`, PNG: `\x89PNG`, DOCX/ZIP: `PK`). Raises error if a manifest file has wrong magic bytes (catches fake images like the original greatpyramid/fig001.gif).
+10. **lib/transform.rb — build orchestration**
+    - Files: `lib/transform.rb`
+    - Changes: `build(source_dir, dest_dir)` method — copy manifest files (validating binaries), transform HTML, generate about.php, generate .nojekyll
+11. **Run tests — all should pass**
 
 ### Phase 4: Retrieval implementation
-11. **lib/retrieve.rb — targeted fetches**
+12. **lib/retrieve.rb — targeted fetches**
     - Files: `lib/retrieve.rb`
     - Changes: `TARGETED_SNAPSHOTS` hash mapping filenames to Wayback `id_` URLs, `fetch_targeted(dest_dir)` method using Net::HTTP
-12. **lib/retrieve.rb — bulk download wrapper**
+13. **lib/retrieve.rb — bulk download wrapper**
     - Files: `lib/retrieve.rb`
     - Changes: `bulk_download(dest_dir)` method — shells out to `wayback_machine_downloader`
 
 ### Phase 5: Rakefile
-13. **Rakefile**
+14. **Rakefile**
     - Files: `Rakefile`
     - Changes: Define tasks `retrieve`, `retrieve:targeted`, `transform`, `build`, `clean`, `test`
 
 ### Phase 6: Documentation
-14. **README.md update**
+15. **README.md update**
     - Files: `README.md`
     - Changes: Document setup, usage (`bundle install`, `rake build`), file manifest, GitHub Pages config instructions
 
@@ -197,6 +201,6 @@ No new external technology — validation not required.
 - [x] Test planning complete (TDD)
 - [x] Implementation plan complete
 - [x] Technology validation complete
-- [ ] Preflight
+- [x] Preflight (PASS)
 - [ ] Build
 - [ ] QA

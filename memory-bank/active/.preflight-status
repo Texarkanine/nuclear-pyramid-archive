@@ -1,0 +1,7 @@
+PASS
+
+Findings:
+1. [FIXED] Manifest overcounted proton.php figures (claimed 31, actually 29 — fig003 and fig005 are .gif only, no .jpg). Corrected in tasks.md.
+2. [INCORPORATED] Added binary magic-byte validation step (step 9) to catch fake images during transform copy.
+3. [ADVISORY] CNAME file not in manifest. If custom domain nuclearpyramid.com is configured, add CNAME generation to transform step.
+4. [ADVISORY] Root-relative Home link (href="/") depends on custom domain being configured. If served from github.io/repo-name/, the Home link will break.
