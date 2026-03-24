@@ -3,14 +3,19 @@
 require_relative "test_helper"
 
 class RetrievePagesConstantTest < Minitest::Test
-  def test_exactly_four_pages
-    assert_equal 4, Retrieve::PAGES.length
+  def test_page_count
+    assert_equal 5, Retrieve::PAGES.length
   end
 
-  def test_all_timestamps_are_2017_era
+  def test_snapshot_cutoff_is_before_2018
+    assert_operator Retrieve::SNAPSHOT_CUTOFF, :<=, "20180101000000",
+      "SNAPSHOT_CUTOFF must not extend into the squatter era"
+  end
+
+  def test_all_timestamps_are_before_cutoff
     Retrieve::PAGES.each do |page|
-      assert_match(/\A2017\d{10}\z/, page[:timestamp],
-        "#{page[:url]} timestamp must be a 14-digit 2017 value, got #{page[:timestamp]}")
+      assert_operator page[:timestamp], :<, Retrieve::SNAPSHOT_CUTOFF,
+        "#{page[:url]} timestamp #{page[:timestamp]} must be before SNAPSHOT_CUTOFF #{Retrieve::SNAPSHOT_CUTOFF}"
     end
   end
 
@@ -91,12 +96,16 @@ class RetrieveCleanupTest < Minitest::Test
     assert_equal "correct", File.read(File.join(@dir, "index.php"))
   end
 
-  def test_removes_url_encoded_directories
+  def test_relocates_files_from_encoded_directories
     encoded = File.join(@dir, "http%3A", "nuclearpyramid.com", "greatpyramid")
     FileUtils.mkdir_p(encoded)
-    File.write(File.join(encoded, "fig001.gif"), "fake")
+    File.write(File.join(encoded, "fig001.gif"), "GIF8real")
     Retrieve.cleanup(@dir)
-    refute Dir.exist?(File.join(@dir, "http%3A"))
+    refute Dir.exist?(File.join(@dir, "http%3A")),
+      "encoded directory should be removed after relocation"
+    assert File.exist?(File.join(@dir, "greatpyramid", "fig001.gif")),
+      "file should be relocated to correct relative path"
+    assert_equal "GIF8real", File.read(File.join(@dir, "greatpyramid", "fig001.gif"))
   end
 
   def test_noop_when_no_index_html
