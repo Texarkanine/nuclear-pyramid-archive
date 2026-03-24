@@ -1,8 +1,0 @@
-PASS
-Date: 2026-03-24
-Task: encoding-restructure
-Findings:
-- FIXED: Charset regex must be case-insensitive
-- FIXED: Removed unnecessary src/index.html step
-- FIXED: Add charset to test fixture
-- ADVISORY: src/about.php charset=iso-8859-1 but ASCII-only content, no visible issue
