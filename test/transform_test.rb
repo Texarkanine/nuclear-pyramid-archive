@@ -108,30 +108,6 @@ class NavInjectionTest < Minitest::Test
   end
 end
 
-class AboutPageTest < Minitest::Test
-  def test_generates_valid_html
-    html = Transform.generate_about_page
-    assert_includes html, "<html"
-    assert_includes html, "</html>"
-  end
-
-  def test_has_site_branding
-    html = Transform.generate_about_page
-    assert_includes html, "NuclearPyramid.com"
-  end
-
-  def test_has_placeholder_content
-    html = Transform.generate_about_page
-    assert_includes html, "live archive"
-  end
-
-  def test_has_nav_bar
-    html = Transform.generate_about_page
-    assert_includes html, 'href="./great_pyramid.php"'
-    assert_includes html, 'href="./about.php"'
-  end
-end
-
 class BinaryValidationTest < Minitest::Test
   def test_valid_gif_passes
     path = File.join(FIXTURE_SOURCE, "np_logo.gif")
@@ -174,52 +150,52 @@ class BuildIntegrationTest < Minitest::Test
   end
 
   def test_build_creates_docs_directory
-    Transform.build(FIXTURE_SOURCE, FIXTURE_DEST)
+    Transform.build(FIXTURE_SOURCE, FIXTURE_SRC, FIXTURE_DEST)
     assert Dir.exist?(FIXTURE_DEST)
   end
 
   def test_build_creates_nojekyll
-    Transform.build(FIXTURE_SOURCE, FIXTURE_DEST)
+    Transform.build(FIXTURE_SOURCE, FIXTURE_SRC, FIXTURE_DEST)
     assert File.exist?(File.join(FIXTURE_DEST, ".nojekyll"))
   end
 
   def test_build_creates_about_page
-    Transform.build(FIXTURE_SOURCE, FIXTURE_DEST)
+    Transform.build(FIXTURE_SOURCE, FIXTURE_SRC, FIXTURE_DEST)
     assert File.exist?(File.join(FIXTURE_DEST, "about.php"))
   end
 
   def test_build_copies_manifest_files
-    Transform.build(FIXTURE_SOURCE, FIXTURE_DEST)
+    Transform.build(FIXTURE_SOURCE, FIXTURE_SRC, FIXTURE_DEST)
     assert File.exist?(File.join(FIXTURE_DEST, "index.php"))
     assert File.exist?(File.join(FIXTURE_DEST, "np_logo.gif"))
   end
 
   def test_build_excludes_junk_files
-    Transform.build(FIXTURE_SOURCE, FIXTURE_DEST)
+    Transform.build(FIXTURE_SOURCE, FIXTURE_SRC, FIXTURE_DEST)
     refute File.exist?(File.join(FIXTURE_DEST, "toolbar.php"))
   end
 
   def test_build_rewrites_links_in_html
-    Transform.build(FIXTURE_SOURCE, FIXTURE_DEST)
+    Transform.build(FIXTURE_SOURCE, FIXTURE_SRC, FIXTURE_DEST)
     content = File.read(File.join(FIXTURE_DEST, "index.php"))
     assert_includes content, "https://nuclearpyramid.com/"
     refute_includes content, "http://nuclearpyramid.com/"
   end
 
   def test_build_injects_about_nav
-    Transform.build(FIXTURE_SOURCE, FIXTURE_DEST)
+    Transform.build(FIXTURE_SOURCE, FIXTURE_SRC, FIXTURE_DEST)
     content = File.read(File.join(FIXTURE_DEST, "index.php"))
     assert_includes content, "about.php"
   end
 
   def test_build_skips_invalid_binaries
-    Transform.build(FIXTURE_SOURCE, FIXTURE_DEST)
+    Transform.build(FIXTURE_SOURCE, FIXTURE_SRC, FIXTURE_DEST)
     refute File.exist?(File.join(FIXTURE_DEST, "greatpyramid", "fig001.gif")),
       "fake image should not be copied"
   end
 
   def test_build_copies_valid_binaries
-    Transform.build(FIXTURE_SOURCE, FIXTURE_DEST)
+    Transform.build(FIXTURE_SOURCE, FIXTURE_SRC, FIXTURE_DEST)
     assert File.exist?(File.join(FIXTURE_DEST, "greatpyramid", "fig002.gif"))
   end
 end

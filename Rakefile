@@ -4,6 +4,7 @@ require_relative "lib/transform"
 require_relative "lib/retrieve"
 
 SOURCE_DIR = File.expand_path("archive.org", __dir__)
+SRC_DIR    = File.expand_path("src", __dir__)
 DEST_DIR   = File.expand_path("docs", __dir__)
 
 desc "Bulk-download site from Wayback Machine into archive.org/"
@@ -20,7 +21,7 @@ end
 
 desc "Transform archive.org/ into docs/ for publishing"
 task :transform do
-  Transform.build(SOURCE_DIR, DEST_DIR)
+  Transform.build(SOURCE_DIR, SRC_DIR, DEST_DIR)
   puts "Transform complete. Output in #{DEST_DIR}"
 end
 
