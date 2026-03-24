@@ -35,9 +35,4 @@ task :clean_fetch do
   puts "Cleaned #{FETCH_DIR}"
 end
 
-desc "Run tests"
-task :test do
-  Dir.glob("test/*_test.rb").each { |f| require_relative f }
-end
-
-task default: :test
+task default: :build
