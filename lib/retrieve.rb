@@ -8,10 +8,10 @@ module Retrieve
   WAYBACK_ID_BASE = "https://web.archive.org/web/%sid_/%s"
 
   TARGETED_SNAPSHOTS = {
+    "index.php"              => { timestamp: "20170509195054", url: "http://nuclearpyramid.com/" },
     "great_pyramid.php"      => { timestamp: "20170513025806", url: "http://nuclearpyramid.com/great_pyramid.php" },
-    "other_two_pyramids.php" => { timestamp: "20170513025806", url: "http://nuclearpyramid.com/other_two_pyramids.php" },
-    "proton.php"             => { timestamp: "20170513025806", url: "http://nuclearpyramid.com/proton.php" },
-    "greatpyramid/fig001.gif" => { timestamp: "20170513025806", url: "http://nuclearpyramid.com/greatpyramid/fig001.gif" },
+    "other_two_pyramids.php" => { timestamp: "20170420190729", url: "http://www.nuclearpyramid.com/other_two_pyramids.php" },
+    "proton.php"             => { timestamp: "20171010225935", url: "http://nuclearpyramid.com/proton.php" },
   }.freeze
 
   BULK_DOWNLOAD_CMD = "wayback_machine_downloader http://nuclearpyramid.com -d %s -c 8 --to 20170513"
