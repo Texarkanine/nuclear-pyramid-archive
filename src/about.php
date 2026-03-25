@@ -62,8 +62,8 @@ h3 { color: FFFFFF; font: 16pt Arial; letter-spacing: 1 pt; }
             Some links may still be broken if their contents were not captured by the Internet Archive, and I have not been able to find copies of their contents yet.
       </p>
       <p>
-            You can browse the Internet Archive's copy of this site at <a class="reg" href="https://web.archive.org/web/20170509195054/http://nuclearpyramid.com/" target="_blank">https://web.archive.org/web/20170509195054/http://nuclearpyramid.com/</a>.
-            The source code of this archive is available at <a class="reg" href="https://github.com/Texarkanine/nuclear-pyramid-archive" target="_blank">https://github.com/Texarkanine/nuclear-pyramid-archive</a>.
+            You can browse the Internet Archive's copy of this site at <a class="reg" href="https://web.archive.org/web/20170509195054/http://nuclearpyramid.com/" target="_blank">this snapshot</a>.
+            The source code of this archive is available on <a class="reg" href="https://github.com/Texarkanine/nuclear-pyramid-archive" target="_blank">GitHub</a>.
       </p>
       <p>
             To the original author: Should you wish to recover ownership of this domain, please reach out to me at <code>npa@cani.ne.jp</code>.
