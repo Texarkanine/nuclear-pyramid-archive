@@ -7,6 +7,8 @@ module Transform
 
   ABOUT_NAV_ITEM = '<td><a class=ttt href="./about.php"><nobr>About</nobr></a></td>'
 
+  DOCX_RELEASE_URL = "https://github.com/Texarkanine/nuclear-pyramid-archive/releases/download/2026-03-27/From.Gravitons.to.Galaxies.docx"
+
   TEXT_EXTENSIONS = %w[.php .html .htm].freeze
 
   REDIRECT_HTML = <<~HTML
@@ -31,6 +33,12 @@ module Transform
       .gsub("http://www.nuclearpyramid.com", "https://nuclearpyramid.com")
       .gsub(/http:\/\/nuclearpyramid\.com:80(?=\/|['"\s])/, "https://nuclearpyramid.com")
       .gsub("http://nuclearpyramid.com", "https://nuclearpyramid.com")
+  end
+
+  def self.rewrite_docx_link(html)
+    html.gsub(/href=(['"])From Gravitons to Galaxies\.docx\1/) do
+      "href=#{$1}#{DOCX_RELEASE_URL}#{$1}"
+    end
   end
 
   def self.inject_about_nav(html)
@@ -90,6 +98,7 @@ module Transform
 
   def self.transform_html(content)
     content = rewrite_links(content)
+    content = rewrite_docx_link(content)
     content = inject_about_nav(content)
     rewrite_charset(content)
   end
