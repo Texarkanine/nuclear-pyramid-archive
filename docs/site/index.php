@@ -69,7 +69,7 @@ h3 { color: FFFFFF; font: 16pt Arial; letter-spacing: 1 pt; }
 <div style='font-size:120%; text-align: center;'>September 21, 2016</div>
 <div style='font-size:200%; text-align: center;'>New, free book!</div>
 <br>
-Download the book <a class=reg href='From Gravitons to Galaxies.docx'>From Gravitons to Galaxies (A New View of the Universe)</a> now.
+Download the book <a class=reg href='https://github.com/Texarkanine/nuclear-pyramid-archive/releases/download/2026-03-27/From.Gravitons.to.Galaxies.docx'>From Gravitons to Galaxies (A New View of the Universe)</a> now.
 </div>
 
 <h1>Welcome to NuclearPyramid.com</h1>
@@ -97,7 +97,7 @@ Future work will tie all these separate papers together into a revised view of p
 <br>
 -->
 <h2>Books</h2>
-<a class=reg href='From Gravitons to Galaxies.docx'>From Gravitons to Galaxies (A New View of the Universe)</a>
+<a class=reg href='https://github.com/Texarkanine/nuclear-pyramid-archive/releases/download/2026-03-27/From.Gravitons.to.Galaxies.docx'>From Gravitons to Galaxies (A New View of the Universe)</a>
 <!--
 <h2>Discussion</h2>
 <a class=reg href='https://nuclearpyramid.com/proton_forum/'>NuclearPyramid.com Forum</a>
