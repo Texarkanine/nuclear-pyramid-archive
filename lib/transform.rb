@@ -9,6 +9,9 @@ module Transform
 
   DOCX_RELEASE_URL = "https://github.com/Texarkanine/nuclear-pyramid-archive/releases/download/2026-03-27/From.Gravitons.to.Galaxies.docx"
 
+  # Book binary is hosted on GitHub Releases (see DOCX_RELEASE_URL); omit from docs/site.
+  EXCLUDED_FROM_SITE = ["From Gravitons to Galaxies.docx"].freeze
+
   TEXT_EXTENSIONS = %w[.php .html .htm].freeze
 
   REDIRECT_HTML = <<~HTML
@@ -59,6 +62,7 @@ module Transform
     Dir.glob("**/*", base: source_dir).each do |relative_path|
       src = File.join(source_dir, relative_path)
       next unless File.file?(src)
+      next if EXCLUDED_FROM_SITE.include?(File.basename(relative_path))
 
       dest = File.join(dest_dir, relative_path)
       FileUtils.mkdir_p(File.dirname(dest))
